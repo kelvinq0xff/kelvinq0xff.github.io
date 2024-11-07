@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>時鐘</title>
+    <title>Clock</title>
     <style>
         body {
             background-color: black;
@@ -27,7 +27,15 @@
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerHTML = now.toLocaleString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 小時為0時顯示為12
+            minutes = minutes.toString().padStart(2, '0');
+            seconds = seconds.toString().padStart(2, '0');
+            document.getElementById('clock').innerHTML = `${hours}:${minutes}:${seconds} ${ampm}`;
         }
 
         setInterval(updateClock, 1000);
