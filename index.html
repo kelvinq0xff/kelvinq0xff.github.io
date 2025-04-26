@@ -1,1 +1,136 @@
-<meta http-equiv="refresh" content="5; url=https://kelvinq.vercel.app/">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.A.D System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial; /* Default font */
+            font-size: 30px;
+            background-color: black;
+            /* Prevent text selection */
+            user-select: none;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+ */
+        }
+
+        /* Optional: Remove previous blinking state classes */
+        .state-red-bg {
+            background-color: rgb(185, 28, 28);
+        }
+        .state-red-bg #launchText {
+            color: white;
+        }
+        .state-white-bg {
+            background-color: white;
+        }
+         .state-white-bg #launchText {
+            color: rgb(185, 28, 28);
+        }
+
+        /* Styling for the launch button */
+        button#launchButton {
+            padding: 20px 40px;
+            border: 2px solid rgb(185,28,28);
+            background-color: transparent;
+            color: rgb(185,28,28);
+            font-size: 48px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <div id="container" class="relative w-screen h-screen flex items-center justify-center">
+
+        <div id="circle" class="w-24 h-24 md:w-32 md:h-32 bg-red-700 rounded-full absolute cursor-pointer shadow-lg"></div>
+
+        <!-- Replacing the text divs with a button -->
+        <button id="launchButton" class="hidden">
+            Launch M.A.D. System
+        </button>
+    </div>
+
+    <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const container = document.getElementById('container');
+            const circle = document.getElementById('circle');
+            const launchButton = document.getElementById('launchButton');  // Updated element
+            let clickCount = 0;
+            const maxClicks = 5;
+            let blinkInterval = null; // Variable to hold the interval ID
+
+            // Function to move the circle to a random position within the container
+            function moveCircle() {
+                if (!circle || circle.classList.contains('hidden')) return;
+                circle.style.display = 'none';
+                const containerWidth = container.clientWidth;
+                const containerHeight = container.clientHeight;
+                const circleWidth = circle.offsetWidth;
+                const circleHeight = circle.offsetHeight;
+                const maxTop = containerHeight - circleHeight;
+                const maxLeft = containerWidth - circleWidth;
+                const randomTop = Math.max(0, Math.random() * maxTop);
+                const randomLeft = Math.max(0, Math.random() * maxLeft);
+                circle.style.top = `${randomTop}px`;
+                circle.style.left = `${randomLeft}px`;
+                setTimeout(() => {
+                    circle.style.display = 'block';
+                }, 10);
+            }
+
+            // Function to start the blinking effect on the button
+            function startScreenBlinking() {
+                let isRedState = true; // Start with red state
+                if (blinkInterval) clearInterval(blinkInterval);
+                // Show the button
+                launchButton.classList.remove('hidden');
+
+                blinkInterval = setInterval(() => {
+                    if (isRedState) {
+                        launchButton.style.backgroundColor = "rgb(185,28,28)";
+                        launchButton.style.color = "white";
+                    } else {
+                        launchButton.style.backgroundColor = "white";
+                        launchButton.style.color = "rgb(185,28,28)";
+                    }
+                    isRedState = !isRedState;
+                }, 200); // Blink interval in milliseconds
+            }
+
+            // Event listener for clicking the circle
+            circle.addEventListener('click', () => {
+                clickCount++;
+                if (clickCount < maxClicks) {
+                    moveCircle();
+                } else {
+                    circle.classList.add('hidden');
+                    circle.style.display = 'none';
+                    // Start blinking effect on the button
+                    startScreenBlinking();
+                }
+            });
+
+            // Initial placement of the circle
+            setTimeout(moveCircle, 50);
+
+            // Recalculate position on window resize if circle is visible
+            window.addEventListener('resize', () => {
+                if (circle && !circle.classList.contains('hidden')) {
+                    moveCircle();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
