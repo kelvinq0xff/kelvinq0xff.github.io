@@ -80,16 +80,10 @@
             function moveCircle() {
                 if (!circle || circle.classList.contains('hidden')) return;
                 circle.style.display = 'none';
-                const containerWidth = container.clientWidth;
-                const containerHeight = container.clientHeight;
-                const circleWidth = circle.offsetWidth;
-                const circleHeight = circle.offsetHeight;
-                const maxTop = containerHeight - circleHeight;
-                const maxLeft = containerWidth - circleWidth;
-                const randomTop = Math.max(0, Math.random() * maxTop);
-                const randomLeft = Math.max(0, Math.random() * maxLeft);
-                circle.style.top = `${randomTop}px`;
-                circle.style.left = `${randomLeft}px`;
+                const randomTop = 15 + Math.random() * 70;
+                const randomLeft = 15 + Math.random() * 70;
+                circle.style.top = `${randomTop}%`;
+                circle.style.left = `${randomLeft}%`;
                 setTimeout(() => {
                     circle.style.display = 'block';
                 }, 10);
