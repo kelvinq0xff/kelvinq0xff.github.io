@@ -9,6 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Ensure the html and body span full device dimensions */
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         /* Custom styles */
         body {
             font-family: Arial; /* Default font */
@@ -20,7 +28,6 @@
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* IE10+ */
         }
-
         /* Optional: Remove previous blinking state classes */
         .state-red-bg {
             background-color: rgb(185, 28, 28);
